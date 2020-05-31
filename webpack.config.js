@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: "./dist/index.js",
+    entry: "./js/index.js",
     devtool: "source-map",
     module: {
         rules: [
@@ -15,6 +15,13 @@ module.exports = {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"
+            },
+            {
+                test: /\.ogg$/,
+                loader: "file-loader",
+                options: {
+                    outputPath: "assets"
+                }
             }
         ],
     },
