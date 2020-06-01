@@ -6,7 +6,7 @@
 
 import { ExampleState } from "../ExampleState";
 import { ExampleTypes } from "./ExampleTypes";
-import { ExampleConstants } from "./ExampleConstants";
+import { ExampleActions } from "./ExampleConstants";
 import produce from "immer";
 
 /**
@@ -17,7 +17,7 @@ import produce from "immer";
 export default function exampleReducer(state: ExampleState = initState(), action: ExampleTypes): ExampleState {
     return produce(state, (draft) => {
         switch(action.type) {
-            case ExampleConstants.Example:
+            case ExampleActions.example:
                 draft.value = action.value;
             break;
         }

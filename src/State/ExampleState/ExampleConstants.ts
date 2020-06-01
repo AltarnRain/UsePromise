@@ -9,6 +9,6 @@
  * Responsibility:  Help me remember how to type redux.
  */
 
-export namespace ExampleConstants {
-    export const Example = "example";
+export enum ExampleConstants {
+    example = 10000,
 }

@@ -5,7 +5,7 @@
  */
 
 import { SetValue } from "./ExampleTypes";
-import { ExampleConstants } from "./ExampleConstants";
+import { ExampleActions } from "./ExampleConstants";
 
 
 /**
@@ -15,7 +15,7 @@ import { ExampleConstants } from "./ExampleConstants";
 
 export function setValue(value: string): SetValue {
     return {
-        type: ExampleConstants.Example,
+        type: ExampleActions.example,
         value,
     };
 }
