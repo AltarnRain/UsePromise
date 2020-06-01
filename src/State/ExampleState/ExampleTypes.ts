@@ -11,9 +11,9 @@ import { ExampleConstants } from "./ExampleConstants";
  * Responsibility:  Help me remember how to setup types for redux actions.
  */
 
-export interface SetExampleType {
+export interface SetValue {
     type: typeof ExampleConstants.Example,
-    myExample: string;
+    value: string;
 }
 
-export type ExampleTypes = SetExampleType;
+export type ExampleTypes = SetValue;

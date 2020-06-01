@@ -14,12 +14,18 @@ import produce from "immer";
  * Responsibility:  Help me remember how to setup a reducer with a compount type.
  */
 
-export function exampleReducer(state: ExampleState, action: ExampleTypes): ExampleState {
+export default function exampleReducer(state: ExampleState = initState(), action: ExampleTypes): ExampleState {
     return produce(state, (draft) => {
         switch(action.type) {
             case ExampleConstants.Example:
-                draft.example = action.myExample;
+                draft.value = action.value;
             break;
         }
-    })
+    });
+}
+
+function initState(): ExampleState {
+    return {
+        value: "Default value",
+    }
 }

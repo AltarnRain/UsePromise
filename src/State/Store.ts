@@ -6,6 +6,7 @@
 
 import { Action, combineReducers, createStore, Store, AnyAction } from "redux";
 import { ApplicationState } from "./ApplicationState";
+import exampleReducer from "./ExampleState/ExampleReducer";
 
 /**
  * Module:          Store
@@ -13,22 +14,22 @@ import { ApplicationState } from "./ApplicationState";
  */
 
 const allReducers = combineReducers({
+    example: exampleReducer
 });
 
-// Create the store when this module is loaded.
-const store = createReduxStore();
+let store: Store<ApplicationState>;
 
 /**
  * Creates the store.
  * @returns {Store<ApplicationState>}. The redux store.
  */
-export function createReduxStore(): Store<ApplicationState> {
+export function createReduxStore(): void {
     // Uncomment he linees below to return a store you can monotir with the Redux Chrome extention.
     // return createStore(
     //     allReducers,
     //     (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__());
 
-    return createStore(allReducers);
+    store = createStore(allReducers);
 }
 
 /**

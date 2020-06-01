@@ -4,17 +4,18 @@
  * See LICENSE.MD.
  */
 
-import { SetExampleType } from "./ExampleTypes";
+import { SetValue } from "./ExampleTypes";
 import { ExampleConstants } from "./ExampleConstants";
+
 
 /**
  * Module:          ExampleAction
  * Responsibility:  Help me remember how to setup types action dispensers.
  */
 
-export function setExample(example: string): SetExampleType {
+export function setValue(value: string): SetValue {
     return {
         type: ExampleConstants.Example,
-        myExample: example,
+        value,
     };
 }
