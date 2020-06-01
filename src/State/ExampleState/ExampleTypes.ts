@@ -4,7 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { ExampleActions } from "./ExampleConstants";
+import ExampleConstants from "./ExampleConstants";
+
 
 /**
  * Module:          ExampleTypes
@@ -12,7 +13,7 @@ import { ExampleActions } from "./ExampleConstants";
  */
 
 export interface SetValue {
-    type: typeof ExampleActions.example,
+    type: typeof ExampleConstants.example,
     value: string;
 }
 

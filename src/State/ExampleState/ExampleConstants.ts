@@ -9,6 +9,8 @@
  * Responsibility:  Help me remember how to type redux.
  */
 
-export enum ExampleConstants {
+enum ExampleConstants {
     example = 10000,
 }
+
+export default ExampleConstants;
