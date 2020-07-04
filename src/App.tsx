@@ -7,6 +7,7 @@
 import React, { useEffect, useState } from "react";
 import { appStore, appState, dispatch } from "./State/Store";
 import { setValue } from "./State/ExampleState/ExampleActions";
+import { AsyncApp } from "./AsyncApp";
 
 /**
  * Module:          Hello world!
@@ -15,24 +16,22 @@ import { setValue } from "./State/ExampleState/ExampleActions";
 
 export default function App(): JSX.Element {
 
-    const [message, setMessage] = useState("unset");
-
-    useEffect(() => {
-        return appStore().subscribe(() => {
-            const newMessage = appState().example.value;
-            setMessage(newMessage);
-        })
-    }, []);
+    const [show, setShow] = useState(false);
 
     function click(): void {
-        dispatch(setValue("Clicked me!"));
+        setShow(true);
+        setTimeout(() => {
+            setShow(false);
+            
+        }, 10);
     }
 
     return (
         <div>
-            <div>Hello world</div>
-            <button onClick={click}>Click me!</button>
-            <div>{message}</div>
+            <button onClick={click}>Cause error!</button>
+            {
+                show && <AsyncApp />
+            }
         </div>
     );
 }
