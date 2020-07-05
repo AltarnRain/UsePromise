@@ -6,20 +6,18 @@
 
 import React, { useState } from "react";
 import { AsyncApp } from "./AsyncApp";
-// import { AsyncApp } from "./AsyncApp";
 
-/**
- * Module:          Hello world!
- * Responsibility:  Sets up a basic app functional component.
- */
 
 export default function App(): JSX.Element {
 
     const [show, setShow] = useState(false);
 
     function click(): void {
+        // Show the async app. This will trigger an async update.
         setShow(true);
         setTimeout(() => {
+            // Hide the async app after 10 ms. This will unmount the
+            // component and any state updates after unmount will trigger an error.
             setShow(false);
         }, 10);
     }
