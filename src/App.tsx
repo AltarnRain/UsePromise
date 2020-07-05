@@ -4,10 +4,8 @@
  * See LICENSE.MD.
  */
 
-import React, { useEffect, useState } from "react";
-import { appStore, appState, dispatch } from "./State/Store";
-import { setValue } from "./State/ExampleState/ExampleActions";
-import { AsyncApp } from "./AsyncApp";
+import React, { useState } from "react";
+// import { AsyncApp } from "./AsyncApp";
 
 /**
  * Module:          Hello world!
@@ -30,7 +28,7 @@ export default function App(): JSX.Element {
         <div>
             <button onClick={click}>Cause error!</button>
             {
-                show && <AsyncApp />
+                // show && <AsyncApp />
             }
         </div>
     );

@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+// import usePromise from "./usePromise";
 
-export function AsyncApp(): React.ReactElement {
 
-    console.log("Loaded");
-    const [a, setA] = useState("hi");
+// let loaded = false;
 
-    useEffect(() => {
-        longAssOperation().then(() => setA("B"));
+// export function AsyncApp(): React.ReactElement {
 
-        return () => {
-            console.log("Unloaded");
-        }
-    });
+//     const [a, setA] = useState("hi");
 
-    return <div>{a}</div>;
-}
+//     const p = usePromise();
 
-function longAssOperation(): Promise<void> {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(), 50);
-    })
-}
+//     useEffect(() => {
+
+//             p<string>((resolve) => {
+//                 setTimeout(() => {
+//                     resolve("S")
+//                 }, 200)
+//             }).then((r) => setA(r));
+        
+//     }, []);
+
+//     return <div>{a}</div>;
+// }
