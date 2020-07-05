@@ -12,25 +12,45 @@ import { CancelPromise } from "../CancelPromise";
  */
 
 describe("CancelPromise", () => {
-    test("TestCancelPromise", () => {
+    test("Resolve", () => {
         
-        new CancelPromise(() => {
-            return "Test";
+        new CancelPromise<string>((resolve) => {
+            resolve("Test");
         }).then((result) => {
             expect(result).toBe("Test");
         });
     });
 
-    test("TestCancelPromise cancelled", () => {
+    test("Reject", () => {
         
-        var p = new CancelPromise(() => {
-            return "Test";
-        })
+        var p = new CancelPromise((resolve, reject) => {
+            reject("Rejected")
+        });
+
+        p.catch((reason) => expect(reason).toBe("Rejected"));
+    });
+
+    test("cancelled resolve", () => {
+        var p = new CancelPromise<string>((resolve) => {
+            resolve("Should not resolve");
+        });
 
         p.cancel();
 
         p.then((result) => {
-            expect(result).toBe("Never valled")
+            expect(result).toBe("Something else");
+        });
+    });
+
+    test("cancelled reject", () => {
+        var p = new CancelPromise<string>((resolve, reject) => {
+            reject("Should not resolve");
+        });
+
+        p.cancel();
+
+        p.catch((result) => {
+            expect(result).toBe("Something else");
         });
     });
 });
