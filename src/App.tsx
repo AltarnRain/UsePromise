@@ -5,6 +5,7 @@
  */
 
 import React, { useState } from "react";
+import { AsyncApp } from "./AsyncApp";
 // import { AsyncApp } from "./AsyncApp";
 
 /**
@@ -20,7 +21,6 @@ export default function App(): JSX.Element {
         setShow(true);
         setTimeout(() => {
             setShow(false);
-            
         }, 10);
     }
 
@@ -28,7 +28,7 @@ export default function App(): JSX.Element {
         <div>
             <button onClick={click}>Cause error!</button>
             {
-                // show && <AsyncApp />
+                show && <AsyncApp />
             }
         </div>
     );

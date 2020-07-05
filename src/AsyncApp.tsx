@@ -1,24 +1,28 @@
-// import React, { useEffect, useState } from "react";
-// import usePromise from "./usePromise";
+import React, { useEffect, useState } from "react";
+import { usePromise } from "./usePromise";
 
 
-// let loaded = false;
+let loaded = false;
 
-// export function AsyncApp(): React.ReactElement {
+export function AsyncApp(): React.ReactElement {
 
-//     const [a, setA] = useState("hi");
+    const [a, setA] = useState("hi");
 
-//     const p = usePromise();
+    const p = usePromise();
 
-//     useEffect(() => {
+    useEffect(() => {
+        p<string>((resolve, reject) => {
+            setTimeout(() => {
+                resolve("Test 2");
+                reject("Test");
+            }, 50);
+        }).then((result) => {
+            console.log("Called when cancelled");
+            setA(result);
+        }).catch((reason) => {
+            console.log("Catch called " + reason);
+        });
+    }, []);
 
-//             p<string>((resolve) => {
-//                 setTimeout(() => {
-//                     resolve("S")
-//                 }, 200)
-//             }).then((r) => setA(r));
-        
-//     }, []);
-
-//     return <div>{a}</div>;
-// }
+    return <div>{a}</div>;
+}

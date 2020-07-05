@@ -4,7 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { CancelPromise } from "../CancelPromise";
+import { CancellablePromise } from "../CancellablePromise";
+import ExampleConstants from "../State/ExampleState/ExampleConstants";
 
 /**
  * Module:          Example of a jest test
@@ -13,8 +14,8 @@ import { CancelPromise } from "../CancelPromise";
 
 describe("CancelPromise", () => {
     test("Resolve", () => {
-        
-        new CancelPromise<string>((resolve) => {
+
+        new CancellablePromise<string>((resolve) => {
             resolve("Test");
         }).then((result) => {
             expect(result).toBe("Test");
@@ -22,8 +23,8 @@ describe("CancelPromise", () => {
     });
 
     test("Reject", () => {
-        
-        var p = new CancelPromise((resolve, reject) => {
+
+        var p = new CancellablePromise((resolve, reject) => {
             reject("Rejected")
         });
 
@@ -31,7 +32,7 @@ describe("CancelPromise", () => {
     });
 
     test("cancelled resolve", () => {
-        var p = new CancelPromise<string>((resolve) => {
+        var p = new CancellablePromise<string>((resolve) => {
             resolve("Should not resolve");
         });
 
@@ -43,7 +44,7 @@ describe("CancelPromise", () => {
     });
 
     test("cancelled reject", () => {
-        var p = new CancelPromise<string>((resolve, reject) => {
+        var p = new CancellablePromise<string>((resolve, reject) => {
             reject("Should not resolve");
         });
 
@@ -53,4 +54,13 @@ describe("CancelPromise", () => {
             expect(result).toBe("Something else");
         });
     });
+
+    test("done is called if provided", () => {
+        let a = "A";
+        var p = new CancellablePromise<string>(undefined, () => a = "B");
+
+        p.then(() => {
+            expect(a).toBe("B");
+        });
+    })
 });
