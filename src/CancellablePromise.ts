@@ -42,20 +42,27 @@ export class CancellablePromise<T> {
 
     /**
      * Construct the cancel promise object.
-     * @param asyncCallback.
+     * @param {(resolve: (value: T) => void, reject?: (reason: any) => void) => void} asyncCallback. Promise like constructor function.
+     * @param {(self: CancellablePromise<T>) => void}. Optional. When defined this method is called when the inner Promise then or catch method is called.
      */
     constructor(
         asyncCallback: (resolve: (value: T) => void, reject?: (reason: any) => void) => void,
         private done?: (self: CancellablePromise<T>) => void) {
 
+        // Bind the 'inner' methods to 'this' to ensure the execute in the right this scope.
         this.innerResolve = this.innerResolve.bind(this);
         this.innerReject = this.innerReject.bind(this);
 
-        this.innerPromise = new Promise<T>((pResolve, pReject) => {
-            this.actualResolve = pResolve;
-            this.actualReject = pReject;
+        // Create an immer promise whose resolve an reject methods are set to fields
+        // This allows us to call them when we want to.
+        this.innerPromise = new Promise<T>((actualResolve, actualReject) => {
+            this.actualResolve = actualResolve;
+            this.actualReject = actualReject;
 
             if (asyncCallback) {
+                // Call the async method provided in the consturctor and inject
+                // the innerResolve and innerReject methods of this class
+                // so we can intercept any calls to them.
                 asyncCallback(this.innerResolve, this.innerReject)
             }
         });
@@ -66,14 +73,16 @@ export class CancellablePromise<T> {
      * @param {T} value. Value of type T. 
      */
     private innerResolve(value: T): void {
-        // Do not call the actual resolve when this CancelPromise is cancelled.
         if (!this.cancelled) {
             this.actualResolve(value);
         }
     }
 
+    /**
+     * Injected Reject function.
+     * @param {any} reason. Reason the promise was rejected.
+     */
     private innerReject(reason: any): void {
-        // Do not call the actual resolve when this CancelPromise is cancelled.
         if (!this.cancelled) {
             this.actualReject(reason);
         }
@@ -99,6 +108,7 @@ export class CancellablePromise<T> {
             }
         });
 
+        // Return this so we can chain a reject.
         return this;
     }
 
@@ -106,7 +116,7 @@ export class CancellablePromise<T> {
      * Wrapper method for a Promise.catch.
      * @param {reason: any} callback. Callback that accepts the result of a reject.
      */
-    public catch(callback: (reason: any) => void): CancellablePromise<T> {
+    public catch(callback: (reason: any) => void): void {
         // Call the innerPromise's catch method to obtain the catch reason.
         // If this CancelPromise is not cancelled the provided callback is called
         // to return the result
@@ -120,8 +130,6 @@ export class CancellablePromise<T> {
                 callback(reason);
             }
         });
-
-        return this;
     }
 
     /**
